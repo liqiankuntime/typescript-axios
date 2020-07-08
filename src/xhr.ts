@@ -1,14 +1,17 @@
 import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from './types'
 import { type } from 'os'
-import { parseHeaders } from './helpers'
+import { parseHeaders, createError } from './helpers'
 
 export default function xhr(config: AxiosRequestConfig): AxiosPromise {
   return new Promise((resolve, reject) => {
-    const { data = null, url, method = 'get', headers, responseType } = config
+    const { data = null, url, method = 'get', headers, responseType, timeout } = config
 
     const request = new XMLHttpRequest()
     if (responseType) {
       request.responseType = responseType
+    }
+    if (timeout) {
+      request.timeout = timeout
     }
     console.log('tyeeeP:', request.responseType, responseType, responseType !== 'text')
     request.open(method.toLocaleUpperCase(), url, true)
@@ -16,9 +19,12 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
       if (request.readyState !== 4) {
         return
       }
+      if (request.status === 0) {
+        return
+      }
       const responseHeaders = parseHeaders(request.getAllResponseHeaders())
       const responseData = responseType !== 'text' ? request.response : request.responseText
-      console.log('parseHeaders:', parseHeaders)
+
       const response: AxiosResponse = {
         data: responseData,
         status: request.status,
@@ -27,7 +33,13 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
         config,
         request
       }
-      resolve(response)
+      handleResponse(response)
+    }
+    request.onerror = () => {
+      reject(createError('Network Error', config, null, request))
+    }
+    request.ontimeout = () => {
+      reject(createError(`timeout of ${timeout} exceeded`, config, 500, request))
     }
 
     Object.keys(headers).forEach(typeName => {
@@ -42,5 +54,21 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
     //   request.setRequestHeader(typename, headers[typename])
     // })
     request.send(data)
+
+    function handleResponse(response: AxiosResponse): void {
+      if (response.status >= 200 && response.status < 300) {
+        resolve(response)
+      } else {
+        reject(
+          createError(
+            `request failed with status code ${response.status}`,
+            config,
+            null,
+            request,
+            response
+          )
+        )
+      }
+    }
   })
 }

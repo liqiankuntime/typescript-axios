@@ -9,7 +9,7 @@ const WebpackConfig = require('./webpack.config');
 const app = express();
 console.log('111')
 const compiler = webpack(WebpackConfig);
-console.log('222')
+console.log('222', compiler)
 app.use(webpackDevMiddleWare(compiler, {
     publicPath: '/__build__/',
     stats: {
@@ -50,6 +50,24 @@ router.post('/base/buffer', (req, res) => {
         let buf = Buffer.concat(msg);
         res.json(buf.toJSON());
     })
+})
+
+router.get('/error/get', (req, res) => {
+    if(Math.random() > 0.5){
+        res.json({
+            msg: 'hello word'
+        })
+    }else {
+        res.status(500);
+        res.end();
+    }
+})
+router.get('/error/timeout', (req, res) => {
+    setTimeout(() => {
+        res.json({
+            msg: 'hello word!'
+        })
+    }, 5000)
 })
 
 app.use(router)

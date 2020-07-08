@@ -19,8 +19,21 @@ module.exports = {
     if (fs.statSync(fullDir).isDirectory() && fs.existsSync(entry)) {
       entries[dir] = ['webpack-hot-middleware/client', entry]
     }
-
+    console.log('entryd::',__dirname, entries)
     return entries
+    // __dirname: /Users/liqiankun/VSCodeProject/ts-axios/examples
+    // { base: 
+    //   [ 
+    //     'webpack-hot-middleware/client',
+    //     '/Users/liqiankun/VSCodeProject/ts-axios/examples/base/app.ts' 
+    //   ],
+    //  simple: 
+    //   [ 
+    //     'webpack-hot-middleware/client',
+    //     '/Users/liqiankun/VSCodeProject/ts-axios/examples/simple/app.ts' 
+    //   ] 
+    // }
+
   }, {}),
 
   /**
