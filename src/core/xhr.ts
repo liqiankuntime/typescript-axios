@@ -1,6 +1,6 @@
-import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from './types'
+import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from '../types'
 import { type } from 'os'
-import { parseHeaders, createError } from './helpers'
+import { parseHeaders, createError } from '../helpers'
 
 export default function xhr(config: AxiosRequestConfig): AxiosPromise {
   return new Promise((resolve, reject) => {
@@ -14,7 +14,7 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
       request.timeout = timeout
     }
     console.log('tyeeeP:', request.responseType, responseType, responseType !== 'text')
-    request.open(method.toLocaleUpperCase(), url, true)
+    request.open(method.toLocaleUpperCase(), url!, true)
     request.onreadystatechange = () => {
       if (request.readyState !== 4) {
         return
@@ -39,7 +39,7 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
       reject(createError('Network Error', config, null, request))
     }
     request.ontimeout = () => {
-      reject(createError(`timeout of ${timeout} exceeded`, config, 500, request))
+      reject(createError(`timeout of ${timeout} exceeded`, config, '500', request))
     }
 
     Object.keys(headers).forEach(typeName => {
