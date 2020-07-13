@@ -92,6 +92,16 @@ function registerErrorRouter(){
 }
 
 function registerExtendRouter(){
+    router.get('/extend/user', (req, res) => {
+        res.json({
+            code: 0,
+            msg: 'hello',
+            result: {
+                name: 'jack',
+                b: 26
+            }
+        })
+    });
     router.get('/extend/get', (req, res) => {
         res.json({
             msg: 'hello word'

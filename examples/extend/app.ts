@@ -31,3 +31,28 @@ axios.post('/extend/post', {msg: "axios.post"} )
 axios.put('/extend/put', {msg: "axios.put"} )
 axios.patch('/extend/patch', {msg: "axios.patch"} )
 
+
+interface ResponseData<T = any>{
+    code: number
+    result: T
+    msg: string
+}
+
+interface User{
+    name: string
+    age: number
+}
+
+function getUser<T>(){
+    return axios<ResponseData<T>>('/extend/user')
+    .then(res => {console.log('rere:', res); return res.data})
+    .catch(error => console.error(error))
+}
+
+async function test(){
+    const user = await getUser<User>();
+    if(user){
+        console.log(user.result.name);
+    }
+}
+test();
