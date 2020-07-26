@@ -1,5 +1,5 @@
 export { transformRequest, transformResponse } from './data'
-export { processHeaders, parseHeaders } from './headers'
+export { processHeaders, parseHeaders, flattenHeaders } from './headers'
 export { buildUrl } from './url'
-export { isDate, isPlainObject, extend } from './util'
+export { isDate, isPlainObject, extend, deepMerge } from './util'
 export { createError } from './error'

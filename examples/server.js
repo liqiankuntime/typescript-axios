@@ -31,6 +31,7 @@ registerBaseRouter();
 registerErrorRouter();
 registerExtendRouter();
 regitsterInterceptorRouter();
+regitsterConfigRouter();
 
 app.use(router)
 
@@ -132,6 +133,12 @@ function registerExtendRouter(){
 function regitsterInterceptorRouter(){
     router.get('/interceptor/get', (req, res) => {
         res.json('hello word')
+    });
+}
+
+function regitsterConfigRouter(){
+    router.post('/config/post', (req, res) => {
+        res.json(req.body);
     });
 }
 
