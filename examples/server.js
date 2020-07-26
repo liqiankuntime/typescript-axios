@@ -138,6 +138,7 @@ function regitsterInterceptorRouter(){
 
 function regitsterConfigRouter(){
     router.post('/config/post', (req, res) => {
+        console.log('response::', req.body);
         res.json(req.body);
     });
 }
