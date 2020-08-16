@@ -8,7 +8,8 @@ const defaults: AxiosRequestConfig = {
   headers: {
     common: {
       Accept: 'Application/json, text/plain, */*'
-    }
+    },
+    test: '123'
   },
   transformRequest: [
     function(data: any, headers: any): any {
@@ -31,7 +32,7 @@ MethodNoData.forEach(method => {
 const MethodWithData = ['post', 'put', 'patch']
 MethodWithData.forEach(method => {
   defaults.headers[method] = {
-    'Content-Type': 'application/x-www-form-urlencode'
+    'Content-Type': 'application/x-www-form-urlencoded' // 对比设置和不设置的区别
   }
 })
 

@@ -23,7 +23,7 @@ function processConfig(config: AxiosRequestConfig): void {
   // config.headers = transformHeaders(config)
   // config.data = transformRequestData(config)
   config.data = transform(config.data, config.headers, config.transformRequest)
-  config.headers = flattenHeaders(config.headers, config.method!)
+  config.headers = flattenHeaders(config.headers, config.method!) // 类型断言 这里肯定不为空
 }
 
 function transforUrl(config: AxiosRequestConfig): string {

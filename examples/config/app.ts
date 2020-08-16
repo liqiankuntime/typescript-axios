@@ -14,13 +14,34 @@ axios.defaults.headers.common['test2'] = '123';
 // })
 
 
-axios({
-    url: '/config/post',
-    method: 'post',
-    data: {a: '12311'},
-    headers: {
-        'test': '3211'
-    },
+// axios({
+//     url: '/config/post',
+//     method: 'post',
+//     data: {a: '12311'},
+//     headers: {
+//         'test': '3211'
+//     },
+//     transformRequest: [
+//         function(data){
+//             return qs.stringify(data);
+//         }, 
+//         ...(axios.defaults.transformRequest as AxiosTransformer[])
+//     ],
+//     transformResponse: [
+//         ...(axios.defaults.transformResponse as AxiosTransformer[]),
+//         function(data){
+//             if(typeof data === 'object'){
+//                 data.b = 2;
+//             }
+//             return data;
+//         }
+//     ]
+// }).then(res => {
+//     console.log('res:::', res);
+// })
+
+
+const instance = axios.create({
     transformRequest: [
         function(data){
             return qs.stringify(data);
@@ -28,14 +49,17 @@ axios({
         ...(axios.defaults.transformRequest as AxiosTransformer[])
     ],
     transformResponse: [
-        ...(axios.defaults.transformRequest as AxiosTransformer[]),
+        ...(axios.defaults.transformResponse as AxiosTransformer[]),
         function(data){
             if(typeof data === 'object'){
-                data.b = 2;
+                data.b = 22;
             }
             return data;
         }
     ]
-}).then(res => {
-    console.log('res:::', res);
-})
+});
+instance({
+    url: '/config/post',
+    method: 'post',
+    data: {a: '12311'},
+}).then(res=> console.log('create:', res))
