@@ -4,7 +4,7 @@ import { parseHeaders, createError } from '../helpers'
 
 export default function xhr(config: AxiosRequestConfig): AxiosPromise {
   return new Promise((resolve, reject) => {
-    const { data = null, url, method = 'get', headers, responseType, timeout } = config
+    const { data = null, url, method = 'get', headers, responseType, timeout, cancelToken } = config
 
     const request = new XMLHttpRequest()
     if (responseType) {
@@ -49,6 +49,15 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
         request.setRequestHeader(typeName, headers[typeName])
       }
     })
+
+    // 取消请求
+    if (cancelToken) {
+      cancelToken.promise.then(reson => {
+        request.abort()
+        reject(reson)
+      })
+    }
+
     // 为啥下面这个写法不行呢
     // Reflect.ownKeys(headers).forEach((typename)=> {
     //   request.setRequestHeader(typename, headers[typename])

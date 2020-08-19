@@ -32,6 +32,7 @@ registerErrorRouter();
 registerExtendRouter();
 regitsterInterceptorRouter();
 regitsterConfigRouter();
+regitsterCancelRouter();
 
 app.use(router)
 
@@ -143,7 +144,16 @@ function regitsterConfigRouter(){
     });
 }
 
+function regitsterCancelRouter(){
+    router.get('/cancel/get', (req, res) => {
+        setTimeout(()=> res.json('hello'), 5000)
+    });
 
+    router.post('/cancel/post', (req, res) => {
+        console.log('post::', req.body);
+        setTimeout(()=>res.json(req.body), 3000 );
+    });
+}
 
 
 
