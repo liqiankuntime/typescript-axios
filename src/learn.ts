@@ -1,6 +1,40 @@
 // https://ts.xcatliu.com/
 // 这里是学习 ts的简要笔记
 
+// 对象的类型--接口
+// 需要注意的是，一旦定义了任意属性，那么确定属性和可选属性的类型都必须是它的类型的子集：
+interface Person {
+  name: string
+  age?: number
+  [propName: string]: any
+}
+
+let tomone: Person = {
+  name: 'Tom',
+  gender: 'male'
+}
+
+// 函数类型 -- 重载
+function reverse(x: number): number
+function reverse(x: string): string
+function reverse(x: number | string): number | string {
+  if (typeof x === 'number') {
+    return Number(
+      x
+        .toString()
+        .split('')
+        .reverse()
+        .join('')
+    )
+  } else if (typeof x === 'string') {
+    return x
+      .split('')
+      .reverse()
+      .join('')
+  }
+}
+reverse(123)
+
 interface ApiError extends Error {
   code: number
 }
