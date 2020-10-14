@@ -119,10 +119,12 @@ export interface CancelTokenStatic {
   source(): CancelTokenSource // 静态方法定义
 }
 
+// 定义Cancel类
 export interface Cancel {
   message?: string
 }
 
+// 定义Cancel类类型
 export interface CancelStatic {
-  new (message?: string): Cancel
+  new (message?: string): Cancel // 构造函数
 }

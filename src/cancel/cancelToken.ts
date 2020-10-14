@@ -24,6 +24,7 @@ export default class CancelToken {
         return
       }
       this.reson = new Cancel(message)
+      // 这里要把Cancel当作值去使用，所以只能用'./cancel'里的Cancel而不是使用'./type'里的Cancel
       resolvePromise(this.reson)
     })
   }

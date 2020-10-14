@@ -146,12 +146,12 @@ function regitsterConfigRouter(){
 
 function regitsterCancelRouter(){
     router.get('/cancel/get', (req, res) => {
-        setTimeout(()=> res.json('hello'), 5000)
+        setTimeout(()=> res.json('hello'), 1000)
     });
 
     router.post('/cancel/post', (req, res) => {
         console.log('post::', req.body);
-        setTimeout(()=>res.json(req.body), 3000 );
+        setTimeout(()=>res.json(req.body), 1000 );
     });
 }
 
