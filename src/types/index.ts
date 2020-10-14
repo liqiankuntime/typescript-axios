@@ -93,6 +93,7 @@ export interface AxiosTransformer {
   (data: any, headers?: any): any
 }
 
+// CancelToken接口是 CancelToken的实例类型
 export interface CancelToken {
   promise: Promise<Cancel>
   reson?: Cancel
@@ -112,10 +113,10 @@ export interface CancelTokenSource {
   cancel: Canceler
 }
 
-// CancelToken的类类型，包含构造函数，source方法
+// CancelToken的 类类型，包含构造函数，source方法
 export interface CancelTokenStatic {
-  new (executor: CancelExecutor): CancelToken
-  source(): CancelTokenSource
+  new (executor: CancelExecutor): CancelToken // 构造函数定义
+  source(): CancelTokenSource // 静态方法定义
 }
 
 export interface Cancel {
