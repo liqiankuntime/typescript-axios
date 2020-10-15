@@ -3,8 +3,10 @@ const bodyParser = require('body-parser');
 const webpack = require('webpack');
 const webpackDevMiddleWare = require('webpack-dev-middleware');
 const webpackHotMiddleWare = require('webpack-hot-middleware');
-console.log('333')
+const cookieParser = require('cookie-parser');
 const WebpackConfig = require('./webpack.config');
+
+require('./server2');
 
 const app = express();
 console.log('111')
@@ -22,6 +24,7 @@ app.use(webpackHotMiddleWare(compiler))
 app.use(express.static(__dirname))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
+app.use(cookieParser());
 
 
 const router = express.Router();
@@ -155,6 +158,10 @@ function regitsterCancelRouter(){
     });
 }
 
-
+function regitsterMoreRouter(){
+    router.get('/more/get', (req, res) => {
+        res.json(req.cookies);
+    });
+}
 
 

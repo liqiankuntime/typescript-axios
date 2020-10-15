@@ -4,7 +4,16 @@ import { parseHeaders, createError } from '../helpers'
 
 export default function xhr(config: AxiosRequestConfig): AxiosPromise {
   return new Promise((resolve, reject) => {
-    const { data = null, url, method = 'get', headers, responseType, timeout, cancelToken } = config
+    const {
+      data = null,
+      url,
+      method = 'get',
+      headers,
+      responseType,
+      timeout,
+      cancelToken,
+      withCredentials
+    } = config
 
     const request = new XMLHttpRequest()
     if (responseType) {
@@ -12,6 +21,9 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
     }
     if (timeout) {
       request.timeout = timeout
+    }
+    if (withCredentials) {
+      request.withCredentials = withCredentials
     }
     console.log('tyeeeP:', request.responseType, responseType, responseType !== 'text')
     request.open(method.toLocaleUpperCase(), url!, true)
