@@ -10,6 +10,11 @@ function encode(val: string): string {
     .replace('/%5B/ig', '[')
     .replace('/%5D/ig', ']')
 }
+
+interface URLOrigin {
+  protocol: string
+  host: string
+}
 export function buildUrl(url: string, params: any): string {
   if (!params) return url
   const parts: string[] = []
@@ -42,4 +47,27 @@ export function buildUrl(url: string, params: any): string {
     url += (url.indexOf('?') === -1 ? '?' : '&') + serializeParams
   }
   return url
+}
+
+export function isURLSameOrigin(requestURL: string): boolean {
+  const parsedOrigin = resolceURL(requestURL)
+  return (
+    parsedOrigin.protocol === currentOrigin.protocol && parsedOrigin.host === currentOrigin.host
+  )
+}
+
+const urlParsingNode = document.createElement('a')
+// <a></a>
+const currentOrigin = resolceURL(window.location.href)
+
+function resolceURL(url: string): URLOrigin {
+  urlParsingNode.setAttribute('hres', url)
+  // <a href="https://new.qq.com/omn/20201015/20201015A0DFHN00.html"></a>
+  let { protocol, host } = urlParsingNode
+  // protocol: https
+  // host: new.qq.com
+  return {
+    protocol, // 协议
+    host // 域名
+  }
 }

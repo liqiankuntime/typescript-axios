@@ -1,6 +1,6 @@
 import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from '../types'
 import { type } from 'os'
-import { parseHeaders, createError } from '../helpers'
+import { parseHeaders, createError, isURLSameOrigin, cookie } from '../helpers'
 
 export default function xhr(config: AxiosRequestConfig): AxiosPromise {
   return new Promise((resolve, reject) => {
@@ -12,7 +12,9 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
       responseType,
       timeout,
       cancelToken,
-      withCredentials
+      withCredentials,
+      xsrfCookieName,
+      xsrfHeaderName
     } = config
 
     const request = new XMLHttpRequest()
@@ -52,6 +54,14 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
     }
     request.ontimeout = () => {
       reject(createError(`timeout of ${timeout} exceeded`, config, '500', request))
+    }
+
+    if ((withCredentials || isURLSameOrigin(url!)) && xsrfCookieName) {
+      // ! 不为空的断言
+      const xsrfValue = cookie.read(xsrfCookieName)
+      if (xsrfValue && xsrfHeaderName) {
+        headers[xsrfHeaderName] = xsrfValue
+      }
     }
 
     Object.keys(headers).forEach(typeName => {

@@ -1,5 +1,6 @@
 export { transformRequest, transformResponse } from './data'
 export { processHeaders, parseHeaders, flattenHeaders } from './headers'
-export { buildUrl } from './url'
+export { buildUrl, isURLSameOrigin } from './url'
 export { isDate, isPlainObject, extend, deepMerge } from './util'
 export { createError } from './error'
+export { default as cookie } from './cookie'
