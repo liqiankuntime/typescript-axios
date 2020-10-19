@@ -87,3 +87,5 @@ function isFish(animal: Cat | Fish) {
 }
 
 isFish(tom)
+
+// 知识点： 非空断言( value! ) 表明 value可能有值
