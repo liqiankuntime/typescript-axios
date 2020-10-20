@@ -6,12 +6,12 @@ const webpackHotMiddleWare = require('webpack-hot-middleware');
 const cookieParser = require('cookie-parser');
 const WebpackConfig = require('./webpack.config');
 
-require('./server2');
+// require('./server2');
 
 const app = express();
-console.log('111')
+
 const compiler = webpack(WebpackConfig);
-console.log('222', compiler)
+
 app.use(webpackDevMiddleWare(compiler, {
     publicPath: '/__build__/',
     stats: {
@@ -62,7 +62,7 @@ function registerSimpleRouter(){
 
 function registerBaseRouter(){
     router.get('/base/get', (req, res) => {
-        console.log('resss::', req);
+        
         res.json({
             msg: req.query
         })
@@ -148,7 +148,7 @@ function regitsterInterceptorRouter(){
 
 function regitsterConfigRouter(){
     router.post('/config/post', (req, res) => {
-        console.log('response::', req.body);
+        
         res.json(req.body);
     });
 }
@@ -159,7 +159,7 @@ function regitsterCancelRouter(){
     });
 
     router.post('/cancel/post', (req, res) => {
-        console.log('post::', req.body);
+        
         setTimeout(()=>res.json(req.body), 1000 );
     });
 }

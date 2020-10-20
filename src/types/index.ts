@@ -1,3 +1,4 @@
+// 字符串自变量类型 https://ts.xcatliu.com/advanced/string-literal-types.html
 export type Method =
   | 'get'
   | 'GET'

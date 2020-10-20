@@ -12,15 +12,21 @@ module.exports = {
    * app.ts 作为 webpack 构建的入口文件
    * entries 收集了多目录个入口文件，并且每个入口还引入了一个用于热更新的文件
    * entries 是一个对象，key 为目录名
+   * 
+   * 知识点：
+   * 1、readdirSync读取指定目录下的文件(夹)名['base', 'cancel', ...]
    */
   entry: fs.readdirSync(__dirname).reduce((entries, dir) => {
     const fullDir = path.join(__dirname, dir)
     const entry = path.join(fullDir, 'app.ts')
+    console.log('start:', entries, dir, fullDir, entry)
     if (fs.statSync(fullDir).isDirectory() && fs.existsSync(entry)) {
       entries[dir] = ['webpack-hot-middleware/client', entry]
     }
-    console.log('entryd::',__dirname, entries);
+    console.log('readdirSync:', fs.readdirSync(__dirname))
+    console.log('entryd::',__dirname, entries, dir);
     return entries
+    // 知识点：
     // __dirname: /Users/liqiankun/VSCodeProject/ts-axios/examples
     // { base: 
     //   [ 
