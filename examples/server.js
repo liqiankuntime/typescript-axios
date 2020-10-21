@@ -196,3 +196,10 @@ router.post('/more/post', (req, res) => {
     }
 });
 
+
+
+router.post('/more/304', (req, res) => {
+    console.log('req:', req.body, req.files);
+    res.status(304);
+    res.end('upload success!');
+});
