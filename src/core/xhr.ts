@@ -21,7 +21,8 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
       xsrfCookieName,
       xsrfHeaderName,
       onDownloadProgress,
-      onUploadProgress
+      onUploadProgress,
+      auth
     } = config
 
     const request = new XMLHttpRequest()
@@ -99,6 +100,11 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
         if (xsrfValue && xsrfHeaderName) {
           headers[xsrfHeaderName] = xsrfValue
         }
+      }
+
+      if (auth) {
+        // btoa(string) 用来创建一个 base-64编码的字符串。
+        headers['Authorization'] = `Basic ${btoa(auth.username)}:${btoa(auth.password)}` // 'Basic' + btoa(auth.username)
       }
 
       Object.keys(headers).forEach(typeName => {

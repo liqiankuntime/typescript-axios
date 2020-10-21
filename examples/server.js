@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 const WebpackConfig = require('./webpack.config');
 const multipart = require('connect-multiparty');
 const path = require('path');
+const atob = require('atob');
 
 // require('./server2');
 
@@ -179,5 +180,19 @@ function regitsterMoreRouter(){
 router.post('/more/upload', (req, res) => {
     console.log('req:', req.body, req.files);
     res.end('upload success!');
+});
+
+router.post('/more/post', (req, res) => {
+    const auth = req.headers.authorization;
+    const [type, credentials] = auth.split(' ') 
+    console.log('atob:', atob(credentials));
+
+    const [username, password] = atob(credentials).split(':');
+    if(type === 'Basic' && username === 'Yee' && password === '123456a'){
+        res.json(req.body);
+    }else {
+        res.status(401)
+        res.end('UnAuthorizaiton!');
+    }
 });
 
