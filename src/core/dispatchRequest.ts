@@ -27,8 +27,8 @@ function processConfig(config: AxiosRequestConfig): void {
 }
 
 function transforUrl(config: AxiosRequestConfig): string {
-  let { url, params } = config
-  return buildUrl(url!, params)
+  let { url, params, paramsSerializer } = config
+  return buildUrl(url!, params, paramsSerializer)
 }
 
 function transformRequestData(config: AxiosRequestConfig): any {

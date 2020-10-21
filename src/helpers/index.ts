@@ -1,6 +1,6 @@
 export { transformRequest, transformResponse } from './data'
 export { processHeaders, parseHeaders, flattenHeaders } from './headers'
 export { buildUrl, isURLSameOrigin } from './url'
-export { isDate, isPlainObject, extend, deepMerge, isFormData } from './util'
+export { isDate, isPlainObject, extend, deepMerge, isFormData, isURLSearchParams } from './util'
 export { createError } from './error'
 export { default as cookie } from './cookie'
