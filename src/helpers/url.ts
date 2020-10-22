@@ -62,6 +62,16 @@ export function buildUrl(
   return url
 }
 
+export function isAbsoluteURL(url: string): boolean {
+  // 字母开头 后面跟的是[字母]或[数字]或[+号]或[-号]或[.]
+  // https://org.modao.cc/
+  return /(^[a-z][a-z\d\+\-\.]*:)?\/\//i.test(url)
+}
+
+export function combineURL(baseURL: string, relativeURL?: string): string {
+  return relativeURL ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '') : baseURL
+}
+
 export function isURLSameOrigin(requestURL: string): boolean {
   const parsedOrigin = resolceURL(requestURL)
   return (
