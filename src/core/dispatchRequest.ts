@@ -28,7 +28,7 @@ function processConfig(config: AxiosRequestConfig): void {
   config.headers = flattenHeaders(config.headers, config.method!) // 类型断言 这里肯定不为空
 }
 
-function transforUrl(config: AxiosRequestConfig): string {
+export function transforUrl(config: AxiosRequestConfig): string {
   let { url, params, paramsSerializer, baseURL } = config
   if (baseURL && !isAbsoluteURL(url!)) {
     url = combineURL(baseURL, url)
