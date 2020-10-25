@@ -17,7 +17,7 @@ interface URLOrigin {
 }
 export function buildUrl(
   url: string,
-  params: any,
+  params?: any,
   paramsSerializer?: (param: any) => string
 ): string {
   if (!params) return url
