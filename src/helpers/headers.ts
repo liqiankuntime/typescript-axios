@@ -35,14 +35,16 @@ export function parseHeaders(headers: string): any {
     return parsed
   }
   headers.split('\r\n').forEach(line => {
-    let [key, val] = line.split(':')
+    // let [key, val] = line.split(':')
+    let [key, ...vals] = line.split(':')
     key = key.trim().toLocaleLowerCase()
     if (!key) {
       return // 进行下一个循环
     }
-    if (val) {
-      val = val.trim().toLocaleLowerCase()
-    }
+    const val = vals.join(':').trim()
+    // if (val) {
+    //   val = val.trim().toLocaleLowerCase()
+    // }
     parsed[key] = val
   })
   return parsed
