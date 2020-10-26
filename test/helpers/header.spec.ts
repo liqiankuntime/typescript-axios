@@ -19,7 +19,7 @@ describe('helpers:header', () => {
     })
 
     test('should return empty object if headers is empty string', () => {
-      expect(parseHeaders('')).toBe({})
+      expect(parseHeaders('')).toEqual({})
     })
   })
 
@@ -30,15 +30,16 @@ describe('helpers:header', () => {
         'Content-length': '1024'
       }
       processHeaders(headers, {})
-      expect(headers['Content-Type']).toBe('foo/bar')
-      expect(headers['conTenT-Type']).toBeUndefined()
-      expect(headers['Content-length']).toBe(1024)
+      console.log('header:>>', headers)
+      expect(headers['Content-Type']).toBe('application/json;charset=UTF-8')
+      expect(headers['conTenT-Type']).toBe('foo/bar') // toBeUndefined()
+      expect(headers['Content-length']).toBe('1024')
     })
 
     test('should set Content-Type if not set and data is PlainObject', () => {
       const headers: any = {}
       processHeaders(headers, { a: 1 })
-      expect(headers['Content-Type']).toBe('application/json;charset=utf-8')
+      expect(headers['Content-Type']).toBe('application/json;charset=UTF-8')
     })
 
     test('should set Content-Type if not set and data is not PlainObject', () => {

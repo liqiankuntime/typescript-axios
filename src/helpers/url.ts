@@ -1,6 +1,6 @@
 import { isDate, isPlainObject, isURLSearchParams } from './index'
 
-function encode(val: string): string {
+export function encode(val: string): string {
   return encodeURIComponent(val)
     .replace('/%40/g', '@')
     .replace('/%3A/ig', ':')
@@ -37,6 +37,7 @@ export function buildUrl(
       let values = []
       if (Array.isArray(val)) {
         values = val
+        key += '[]'
       } else {
         values = [val]
       }
@@ -65,7 +66,7 @@ export function buildUrl(
 export function isAbsoluteURL(url: string): boolean {
   // 字母开头 后面跟的是[字母]或[数字]或[+号]或[-号]或[.]
   // https://org.modao.cc/
-  return /(^[a-z][a-z\d\+\-\.]*:)?\/\//i.test(url)
+  return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url)
 }
 
 export function combineURL(baseURL: string, relativeURL?: string): string {
