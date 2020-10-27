@@ -34,6 +34,7 @@ export function parseHeaders(headers: string): any {
   if (!headers) {
     return parsed
   }
+  // \r\n 一般一起用，用来表示键盘上的回车键，也可只用 \n。
   headers.split('\r\n').forEach(line => {
     // let [key, val] = line.split(':')
     let [key, ...vals] = line.split(':')

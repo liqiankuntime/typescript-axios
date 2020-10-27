@@ -15,6 +15,14 @@ interface URLOrigin {
   protocol: string
   host: string
 }
+
+//  * 使用 GET 请求经常会发生的一个错误，
+//  * 就是查询字符串的格式有问题。
+//  * 查询字符串中每个参数的名 称和值都必须使用
+//  * encodeURIComponent()进行编码，
+//  * 然后才能放到 URL 的末尾;而且所有名-值对儿都必须由和号(&)分隔，
+//  * 如下面的例子所示。【红宝书】
+
 export function buildUrl(
   url: string,
   params?: any,

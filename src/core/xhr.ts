@@ -37,6 +37,7 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
     //   request.withCredentials = withCredentials
     // }
     console.log('tyeeeP:', request.responseType, responseType, responseType !== 'text')
+    // 调用 open()方法并不会真正发送请求， 而只是启动一个请求以备发送。[红宝书]
     request.open(method.toLocaleUpperCase(), url!, true)
     configureRequest()
     addEvents()
@@ -50,13 +51,15 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
         request.responseType = responseType
       }
       if (timeout) {
-        request.timeout = timeout
+        request.timeout = timeout // 设置过期的时间属性
       }
       if (withCredentials) {
         request.withCredentials = withCredentials
       }
     }
     function addEvents(): void {
+      // 不过，必须在调用 open()之前指定 onreadystatechange 事件处理程序
+      // 才能确保跨浏览器兼容性【红宝书】
       request.onreadystatechange = () => {
         if (request.readyState !== 4) {
           return
@@ -80,6 +83,13 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
       request.onerror = () => {
         reject(createError('Network Error', config, null, request))
       }
+      // 请求终止时，会调用 ontimeout 事件处理程序；配合timeout属性使用
+      // xhr的取消对比Promise.race()方法的取消 const p = Promise.race([
+      //   fetch('/resource-that-may-take-a-while'),
+      //   new Promise(function (resolve, reject) {
+      //     setTimeout(() => reject(new Error('request timeout')), 5000)
+      //   })
+      // ]);
       request.ontimeout = () => {
         reject(createError(`timeout of ${timeout} exceeded`, config, '500', request))
       }
@@ -108,10 +118,13 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
         headers['Authorization'] = `Basic ${btoa(auth.username)}:${btoa(auth.password)}` // 'Basic' + btoa(auth.username)
       }
 
+      // 要成功发送请求头部信息，必须在调用 open()方法之后且调用 send()方法 之前
+      // 调用 setRequestHeader() 【红宝书】
       Object.keys(headers).forEach(typeName => {
         if (!data && typeName.toLocaleLowerCase() === 'content-type') {
           Reflect.deleteProperty(headers, typeName)
         } else {
+          // 这个方法接受两个参数:头部字段 的名称和头部字段的值 【红宝书】
           request.setRequestHeader(typeName, headers[typeName])
         }
       })
