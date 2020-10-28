@@ -36,7 +36,6 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
     // if (withCredentials) {
     //   request.withCredentials = withCredentials
     // }
-    console.log('tyeeeP:', request.responseType, responseType, responseType !== 'text')
     // 调用 open()方法并不会真正发送请求， 而只是启动一个请求以备发送。[红宝书]
     request.open(method.toLocaleUpperCase(), url!, true)
     configureRequest()
@@ -132,10 +131,17 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
     function progressCancel(): void {
       // 取消请求
       if (cancelToken) {
-        cancelToken.promise.then(reson => {
-          request.abort()
-          reject(reson)
-        })
+        cancelToken.promise
+          .then(reson => {
+            request.abort()
+            reject(reson)
+          })
+          .catch(
+            /* istanbul ignore next */
+            () => {
+              // do nothing 忽略单元测试
+            }
+          )
       }
     }
     function handleResponse(response: AxiosResponse): void {

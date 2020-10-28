@@ -51,7 +51,7 @@ export default function mergeConfig(
 
   function mergeField(key: string): void {
     const strat = strats[key] || defaultStrat
-    config[key] = strat(config1[key], config2![key]) // !类型断言这里的config2一定不会为空
+    config[key] = strat(config1[key], config2[key]) // !类型断言这里的config2一定不会为空
   }
 
   return config

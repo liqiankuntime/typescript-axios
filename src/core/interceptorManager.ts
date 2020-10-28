@@ -11,7 +11,6 @@ export default class InterceptorManager<T> {
     this.interceptors = []
   }
   use(resolved: ResolveFn<T>, rejected?: RejectFn) {
-    console.log('userrr::', resolved)
     this.interceptors.push({
       resolved,
       rejected

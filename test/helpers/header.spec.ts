@@ -30,7 +30,6 @@ describe('helpers:header', () => {
         'Content-length': '1024'
       }
       processHeaders(headers, {})
-      console.log('header:>>', headers)
       expect(headers['Content-Type']).toBe('application/json;charset=UTF-8')
       expect(headers['conTenT-Type']).toBe('foo/bar') // toBeUndefined()
       expect(headers['Content-length']).toBe('1024')
