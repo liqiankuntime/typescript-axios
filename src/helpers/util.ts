@@ -1,3 +1,7 @@
+const toString = Object.prototype.toString
+
+// val is 类型
+// 【类型谓词保护，目的是后面使用这个方法后，值能确实具体是什么类型的】
 export function isDate(val: any): val is Date {
   return Object.prototype.toString.call(val) === '[object Date]'
 }

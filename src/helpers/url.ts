@@ -40,6 +40,7 @@ export function buildUrl(
     Object.keys(params).forEach(key => {
       const val = params[key]
       if (val === null || typeof val === 'undefined') {
+        // 不走瞎下面的内容；继续下一个的循环
         return
       }
       let values = []
