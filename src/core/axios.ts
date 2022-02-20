@@ -45,11 +45,11 @@ export default class Axios {
         rejected: undefined
       }
     ]
-    // request： 先添加的先执行
+    // request： 先添加的后执行
     this.interceptors.request.forEach(interceptor => {
       chain.unshift(interceptor)
     })
-    // response： 先添加的后执行
+    // response： 先添加的先执行
     this.interceptors.response.forEach(interceptor => {
       chain.push(interceptor)
     })

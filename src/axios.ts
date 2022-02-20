@@ -7,9 +7,13 @@ import CancelToken from './cancel/cancelToken'
 import Cancel, { isCancel } from './cancel/cancel'
 
 function createInstance(config: AxiosRequestConfig): AxiosStatic {
+  // 1、包括扩展接口属性方法的类
   const context = new Axios(config)
+  // 2、原本的axios的对象
   const instance = Axios.prototype.request.bind(context)
+  // 然后把这个类(1)的原型属性和自身属性再拷贝到 axios(2) 上
   extend(instance, context)
+  // 此时得到混合对象axios
   return instance as AxiosStatic
 }
 
